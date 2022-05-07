@@ -1,0 +1,180 @@
+#####################
+#   load packages   #
+#####################
+import pandas as pd
+import janitor
+import seaborn as sns
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import plotly.io as pio
+
+#####################
+#     get data      #
+#####################
+
+ppa_price = pd.read_csv('/Users/katiepress/Desktop/Rproj/Tidy Tuesday/ppa_price.csv')
+
+############################
+#   check the data types   #
+############################
+
+ppa_price.dtypes
+
+########################################
+#   check out first few rows of data   #
+########################################
+
+ppa_price.head()
+
+########################################
+#     convert data from wide to long   #
+########################################
+
+ppa_price_long = pd.melt(
+    ppa_price,
+    id_vars=['PPA Execution Date', 'Capacity (MW)'],
+    var_name='region',
+    value_name='price'
+)
+
+#############################
+#   clean the column names  #
+#############################
+ppa_price_long = janitor.clean_names(ppa_price_long)
+
+#check column names, one didn't work as expected
+ppa_price_long.columns
+#rename that one column
+ppa_price_long = ppa_price_long.rename(columns={"capacity_mw_" : "capacity_mw"})
+
+#################################
+#   Drop the NAs from price     #
+#   result should be 333 rows   #
+#################################
+
+ppa_price_long = ppa_price_long.dropna()
+
+#########################################
+#    Convert Region to Categorical      #
+#########################################
+
+ppa_price_long['region_cat'] = pd.Categorical(ppa_price_long['region'], ordered=True)
+
+#check the levels
+ppa_price_long['region_cat'].value_counts()
+
+#####################
+#   Convert Dates   #
+#####################
+
+#Make sure execution date is date format
+ppa_price_long['ppa_execution_date'] = pd.to_datetime(ppa_price_long['ppa_execution_date'])
+#create the year column
+ppa_price_long['ppa_year'] = ppa_price_long['ppa_execution_date'].dt.year
+
+################################################
+##          Bubble Plot with Seaborn          ##
+################################################
+
+sns.set_style("whitegrid")
+
+#create a colormap for the regions
+colormap = {
+    "CAISO": "#4E79A7", 
+    "ERCOT": "#F28E2B", 
+    "Hawaii": "#E15759", 
+    "ISO-NE": "#76B7B2",
+    "MISO": "#59A14F", 
+    "NYISO": "#BAB0AC", 
+    "PJM": "#9C755F", 
+    "Southeast (non-ISO)": "#FF9DA7",
+    "SPP": "#B07AA1", 
+    "West (non-ISO)": "#EDC948"}
+
+p = sns.relplot(data=ppa_price_long, 
+    x="ppa_execution_date", 
+    y = "price", 
+    size = "capacity_mw", 
+    hue = "region_cat",
+    palette = colormap,
+    ec=ppa_price_long["region_cat"].map(colormap),
+    fc="none",
+    sizes = (3, 550))
+
+p.set(xlabel=None, ylabel="PPA Price (2020 $/MWh)")
+
+p.legend.remove()
+p.fig.legend(handles=p.legend.legendHandles[:11])
+
+################################################
+##          Bubble Plot with Plotly           ##
+################################################
+
+fig2 = px.scatter(ppa_price_long,
+ x='ppa_execution_date',
+ y='price',
+ template = "plotly_white",
+ labels = dict(region_cat = "Region",
+               ppa_execution_date = "", 
+               price = "PPA Price (2020 $/MWh)"),
+ size='capacity_mw',
+ color='region_cat',
+ color_discrete_map=colormap)
+
+fig2.update_layout(legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=1.02,
+    xanchor="left",
+    x=0
+))
+
+fig2.update_traces(marker_symbol='circle-open', 
+marker_line_width = 2)
+
+
+fig2.show()
+
+################################################
+##          Stacked Bar with Plotly           ##
+################################################
+
+#aggregate but keep as dataframe
+ppa_capacity = ppa_price_long.groupby(['region_cat', 'ppa_year'])['capacity_mw'].sum().reset_index()
+
+#apparently I need to sort it to get the regions in the right order as well
+ppa_capacity = ppa_capacity.sort_values(by='region_cat', ascending=False)
+
+#final bar plot
+fig3 = px.bar(ppa_capacity,
+             x='ppa_year',
+             y='capacity_mw',
+             labels = dict(region_cat = "Region",
+                           ppa_year = "", 
+                           capacity_mw = "Capacity (MW-AC)"),
+             color='region_cat',
+             color_discrete_map=colormap, 
+             template = "plotly_white")
+
+fig3.update_layout(legend_traceorder="reversed",
+                  legend_title_text="Region",
+                  legend = dict(orientation='h', 
+                  yanchor='bottom',
+                  y = 1.02,
+                  xanchor='left',
+                  x=0))
+
+
+fig3.update_layout(
+    annotations=[
+        {"x": x, "y": total + 100, "text": str(total), "showarrow": False}
+        for x, total in ppa_capacity.groupby("ppa_year", as_index=False).agg({"capacity_mw": "sum"}).values.astype(int)
+    ]
+)
+
+fig3.update_xaxes(tickvals=[2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013,
+                           2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022])
+
+fig3.show()
+
