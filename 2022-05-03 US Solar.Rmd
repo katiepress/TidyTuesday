@@ -13,31 +13,28 @@ library(lubridate)
 library(gtsummary)
 library(readxl)
 library(ggpubr)
+library(htmltools)
 ```
 
-# Analytics Three Ways
+# Introducing Analytics Three Ways
 
-I love the show Top Chef, and I've been watching it for years. One funny thing I've noticed is that whenever one of the chefs tries to make a dish too fancy by presenting it in different ways (e.g., "grilled cheese three ways"), it usually ends in disaster. Or, one of the grilled cheese preparations is delicious, and one is some weird kind of deconstructed thing with foam on it that doesn't taste good at all. The important lesson here is that it's better to do one thing you're good at than doing multiple things you're mediocre (or bad) at. 
+I love the show Top Chef, and I've been watching it for years. One funny thing I've noticed is that whenever one of the chefs tries to make a dish too fancy by presenting it in different ways (e.g., "grilled cheese three ways"), it usually ends in disaster. Or, one of the grilled cheese preparations is delicious, and one is some weird kind of deconstructed thing with foam on it that doesn't taste good at all. The important lesson here is that it's better to do one thing you're good at than doing multiple things you're mediocre (or bad) at.
 
-So, naturally I've decided to ignore this advice completely. I have been using R for years almost on a daily basis, so I'm quite comfortable with it. But lately I've been experimenting with some other languages, trying to learn the syntactical differences as well as the benefits and drawbacks to each one in comparison with R. I decided to use the Tidy Tuesday challenges to practice these skills, specifically in Python and Julia (at least for now). I'm just going to add a blanket disclaimer here that applies to all future ATW posts, which is that I am not an expert in either Python OR Julia, and my analyses in these languages might not be ideal so please be nice if you have comments or suggestions. Python is probably going to be like a deep-fried grilled cheese that would have been great if it was cooked correctly, and Julia will probably be a hot mess with the weird foam. 
+So, naturally I've decided to ignore this advice completely. I have been using R for years almost on a daily basis, so I'm quite comfortable with it. But lately I've been experimenting with some other languages, trying to learn the syntactical differences as well as the benefits and drawbacks to each one in comparison with R. I decided to use the Tidy Tuesday challenges to practice these skills, specifically in Python and Julia (at least for now). I'm just going to add a blanket disclaimer here that applies to all future ATW posts, which is that I am not an expert in either Python OR Julia, and my analyses in these languages might not be ideal so please be nice if you have comments or suggestions. 
 
-ANYWAYS. 
+I'm still deciding on how to best share the Python and Julia scripts. If I shared all the code in Rmarkdown it might get really long, so for now I'll probably sprinkle in a little bit here and there. You can find my code on Github:
 
-I'm still deciding on how to best share the Python and Julia scripts. If I shared all the code in Rmarkdown it might get really long, so for now I'll probably sprinkle in a little bit here and there. You can find my code on Kaggle: 
+-   [Rmarkdown Analysis](https://github.com/katiepress/TidyTuesday/blob/2f12c465782a7166aeb61a31f02c9aa6d2341f8f/2022-05-03%20US%20Solar.Rmd)
+-   [Python Analysis in Jupyter Notebook](https://github.com/katiepress/TidyTuesday/blob/7ddccbf32f2a9c602df1e0d7eefba605592a6098/2022-05-03%20US%20Solar.ipynb)
+-   [Julia Analysis in Jupyter Notebook](https://github.com/katiepress/TidyTuesday/blob/7ddccbf32f2a9c602df1e0d7eefba605592a6098/2022-05-03%20US%20Solar%20Julia.ipynb)
 
-- [Rmarkdown Analysis]()
-- [Python Analysis in Jupyter Notebook]()
-- [Python Just the Code]()
-- [Julia Analysis in Jupyter Notebook]()
-- [Julia Just the Code]()
-
-I will do my best to keep the structure of the code very similar between the three files, and with operations in the same order. The Julia and Python notebooks have more information and notes on what I thought were interesting differences in the code, and the regular script files have just the code with some short comments. 
+I will do my best to keep the structure of the code very similar between the three files, and with operations in the same order. Also just FYI, I've been using VSCode for Python/Julia and still using RStudio for R.
 
 ## Data Overview
 
-This week's Tidy Tuesday data is from Berkeley Lab's "Utility-Scale Solar 2021 Edition". I downloaded the data from the Tidy Tuesday Github repo but, as usual, got distracted by all the other information I found about the data online. I found this [Tableau Dashboard](https://emp.lbl.gov/pv-ppa-prices) and I really like how it looks (especially the bubble chart), so I decided to try and recreate it using ggplot2. 
+This week's Tidy Tuesday data is from Berkeley Lab's "Utility-Scale Solar 2021 Edition". I downloaded the data from the Tidy Tuesday Github repo but, as usual, got distracted by all the other information I found about the data online. I found this [Tableau Dashboard](https://emp.lbl.gov/pv-ppa-prices) and I really like how it looks (especially the bubble chart), so I decided to try and recreate it using ggplot2.
 
-I went to the [original Excel file](https://emp.lbl.gov/sites/default/files/2021_utility-scale_solar_data_update_0.xlsm) for the Tidy Tuesday data and figured out which tabs held the data to create the dashboard visualizations. I used the readxl package to read in the data and then saved it out as a csv file to use in my Julia and Python analyses. I've also uploaded the [ppa_price csv](https://www.kaggle.com/datasets/katiepress/us-solar-ppa-prices) to Kaggle. This is the data in original format, so you can use it to import at the beginning of the file if you're following along with one of the scripts, just change the file path to wherever you're storing it. 
+I went to the [original Excel file](https://emp.lbl.gov/sites/default/files/2021_utility-scale_solar_data_update_0.xlsm) for the Tidy Tuesday data and figured out which tabs held the data to create the dashboard visualizations. I used the readxl package to read in the data and then saved it out as a csv file to use in my Julia and Python analyses. I've also uploaded the [ppa_price csv](https://www.kaggle.com/datasets/katiepress/us-solar-ppa-prices) to Kaggle. This is the data in original format, so you can use it to import at the beginning of the file if you're following along with one of the scripts, just change the file path to wherever you're storing it.
 
 ```{r message=FALSE, warning=FALSE}
 ppa_price <- read_excel(
@@ -50,26 +47,25 @@ ppa_price <- read_excel(
 
 # Data Analysis
 
-This analysis has a few main components that are commonly needed no matter which programming language you're using, such as: 
+This analysis has a few main components that are commonly needed no matter which programming language you're using, such as:
 
-- Reading in and examining the data
-- Converting data from wide to long
-- Creating new variables, changing data types
-- Dealing with date-time formatting
-- Plotting
+-   Reading in and examining the data
+-   Converting data from wide to long
+-   Creating new variables, changing data types
+-   Dealing with date-time formatting
+-   Plotting
 
-I wanted to use the programs' native plotting mechanisms (or close to them), so tried as best I could to create plots in python Seaborn and Julia's default gr() plotting backend, and it didn't go so well. I ended up having to use Plotly for both Python and Julia, and I've used Plotly with R in the past so it was a little bit easier to figure out. However, I use ggplot2 about 90% of the time, so I stuck with that for the R analysis. 
+I wanted to use the programs' native plotting mechanisms (or close to them), so tried as best I could to create plots in python Seaborn and Julia's default gr() plotting backend, and it didn't go so well. I ended up having to use Plotly for both Python and Julia, and I've used Plotly with R in the past so it was a little bit easier to figure out. However, I use ggplot2 about 90% of the time, so I stuck with that for the R analysis.
 
 ## Examining the Data
 
-I don't always do this in R because I can just visually check out the dataset in Rstudio to see what the types are. But to check the types of all the columns in the dataset (similar to python's dtypes), you could use str(). So we can see that in R, the first column is a date, and all the other columns have been read in as numeric. 
+I don't always do this in R because I can just visually check out the dataset in Rstudio to see what the types are. But to check the types of all the columns in the dataset (similar to python's dtypes), you could use str(). So we can see that in R, the first column is a date, and all the other columns have been read in as numeric.
 
 ```{r}
 str(ppa_price)
 ```
 
-
-The data is in wide format. The bar chart at the bottom is based on the capacity (MW) which is the second column in the table. But to tell which region it is, you have to look and see which region column is not NA. Note that Python has the same head() function, while in Julia you could use first(). 
+The data is in wide format. The bar chart at the bottom is based on the capacity (MW) which is the second column in the table. But to tell which region it is, you have to look and see which region column is not NA. Note that Python has the same head() function, while in Julia you could use first().
 
 ```{r}
 head(ppa_price)
@@ -77,7 +73,7 @@ head(ppa_price)
 
 ## Converting Data from Wide to Long
 
-There are 333 rows in the table. In R, we can use pivot_longer, which has the benefit of being able to drop NAs as well. Note: this can be done with gather() instead of pivot_longer, but it's recommended to switch to pivot_longer instead for any new code you're writing. 
+There are 333 rows in the table. In R, we can use pivot_longer, which has the benefit of being able to drop NAs as well. Note: this can be done with gather() instead of pivot_longer, but it's recommended to switch to pivot_longer instead for any new code you're writing.
 
 ```{r}
 ppa_price_long <- ppa_price %>% 
@@ -89,7 +85,7 @@ ppa_price_long <- ppa_price %>%
 
 ## Clean the Column Names
 
-I usually do this right away when I read in a new dataset, but in this case I didn't because I knew I wanted to gather those region columns into one column, and if I cleaned the columns before I gathered I would just have to reformat them later for the charts. So now I can use the clean_names() function from janitor - which I was happy to see is also available in Python. 
+I usually do this right away when I read in a new dataset, but in this case I didn't because I knew I wanted to gather those region columns into one column, and if I cleaned the columns before I gathered I would just have to reformat them later for the charts. So now I can use the clean_names() function from janitor - which I was happy to see is also available in Python.
 
 ```{r}
 ppa_price_long <- ppa_price_long %>%
@@ -98,7 +94,7 @@ ppa_price_long <- ppa_price_long %>%
 
 ## Convert Region to Factor
 
-This is really going to be helpful for the chart so that it automatically knows the order for the regions, and I can create a color palette that corresponds with them as well. This will be in alphabetical order. 
+This is really going to be helpful for the chart so that it automatically knows the order for the regions, and I can create a color palette that corresponds with them as well. This will be in alphabetical order.
 
 ```{r}
 ppa_price_long <- ppa_price_long %>%
@@ -108,7 +104,7 @@ ppa_price_long <- ppa_price_long %>%
 
 ## Dealing with Dates
 
-I thought R and Python were similarly easy to deal with when it comes to date, and Julia was a little bit more difficult. In any case, I don't necessarily NEED to do anything here since my dates have already been read in as POSIXct format, but I usually would convert them to lubridate date format anyways. So I'll do that here, and then create a year column for more aggregation later. 
+I thought R and Python were similarly easy to deal with when it comes to date, and Julia was a little bit more difficult. In any case, I don't necessarily NEED to do anything here since my dates have already been read in as POSIXct format, but I usually would convert them to lubridate date format anyways. So I'll do that here, and then create a year column for more aggregation later.
 
 ```{r}
 ppa_price_long <- ppa_price_long %>% 
@@ -116,10 +112,9 @@ ppa_price_long <- ppa_price_long %>%
   mutate(ppa_year = year(ppa_execution_date))
 ```
 
-
 ## Bubble Chart in GGplot2
 
-Create the Tableau color palette for the plot. You can technically use the tableau color scales from ggthemes, but I noticed the colors were in a weird order on the dashboard? I just decided to use the hex codes so I could be sure that they would map to the right regions. 
+Create the Tableau color palette for the plot. You can technically use the tableau color scales from ggthemes, but I noticed the colors were in a weird order on the dashboard? I just decided to use the hex codes so I could be sure that they would map to the right regions.
 
 ```{r}
 color.pal <- c(
@@ -136,7 +131,7 @@ color.pal <- c(
   )
 ```
 
-Now use ggplot to make the bubble chart. Normally it probably wouldn't take so much formatting, but I wanted to try and get as close to the Tableau dashboard as possible. I'm not really going to bother with the legend here because I'm going to combine the charts into one plot later on and I'm not going to use this legend. 
+Now use ggplot to make the bubble chart. Normally it probably wouldn't take so much formatting, but I wanted to try and get as close to the Tableau dashboard as possible. I'm not really going to bother with the legend here because I'm going to combine the charts into one plot later on and I'm not going to use this legend.
 
 ```{r}
 p1 <- ppa_price_long %>% 
@@ -167,7 +162,7 @@ p1
 
 ## Stacked Bar in GGplot2
 
-This first chunk of code is to create the aggregation by year that will be used for the numbers on the very top of the bar. There are other ways to do this, you could use annotate() for example, but I thought this was a nice hack. Basically I'm going to sum by year, but I'm going to keep the region that corresponds to the top bar on the chart. Then I join it to the dataset I'm using for the stacked bar plot so each year only has one total and the rest of the rows have NA totals. That way I can use geom_text and it will actually look nice. 
+This first chunk of code is to create the aggregation by year that will be used for the numbers on the very top of the bar. There are other ways to do this, you could use annotate() for example, but I thought this was a nice hack. Basically I'm going to sum by year, but I'm going to keep the region that corresponds to the top bar on the chart. Then I join it to the dataset I'm using for the stacked bar plot so each year only has one total and the rest of the rows have NA totals. That way I can use geom_text and it will actually look nice.
 
 ```{r}
 year_totals <- ppa_price_long %>% 
@@ -178,7 +173,8 @@ year_totals <- ppa_price_long %>%
             region = first(region))
 ```
 
-I'm doing the aggregation by region and year as part of this code right before the ggplot starts, and left joined the year totals on as I mentioned above. Adding the label argument as part of the aes() in the overall ggplot makes it really easy to use geom_text when you have multiple plot layers. The rest of this formatting, again, is really just to try and match the Tableau dashboard. Looks pretty good so far.  
+I'm doing the aggregation by region and year as part of this code right before the ggplot starts, and left joined the year totals on as I mentioned above. Adding the label argument as part of the aes() in the overall ggplot makes it really easy to use geom_text when you have multiple plot layers. The rest of this formatting, again, is really just to try and match the Tableau dashboard. Looks pretty good so far.
+
 ```{r message=FALSE, warning=FALSE}
 p2 <- ppa_price_long %>% 
   group_by(region, ppa_year) %>% 
@@ -221,12 +217,12 @@ p2
 ggpubr::ggarrange(p1, p2, ncol = 1, common.legend = TRUE)
 ```
 
-
 ## Pie Chart in GGplot2
 
-At first I wasn't going to do a pie chart, because they are not really ideal and especially not with so many categories. But then I realized it would be a good way to use this plot for the legend when I arrange them all together. Plus it looks more like the dashboard. 
+At first I wasn't going to do a pie chart, because they are not really ideal and especially not with so many categories. But then I realized it would be a good way to use this plot for the legend when I arrange them all together. Plus it looks more like the dashboard.
 
-To create a pie chart in ggplot2 you basically have to create a single stacked bar and then force it to polar coordinates. So here's the aggregation code I'm going to base the plot on. 
+To create a pie chart in ggplot2 you basically have to create a single stacked bar and then force it to polar coordinates. So here's the aggregation code I'm going to base the plot on.
+
 ```{r}
 cumulative_cap <- ppa_price_long %>% 
   group_by(region) %>% 
@@ -234,7 +230,7 @@ cumulative_cap <- ppa_price_long %>%
   mutate(capacity_label = prettyNum(cumulative_capacity, big.mark = ","))
 ```
 
-The really tricky part is to add labels, and I'm not going to do that for all of the regions since they are not shown on the dashboard either. I ended up deciding to use annotate instead just to show those five specific regions. Also note that I'm using the direction argument in coord_polar(), all that does is flip the slices the opposite way, which I needed to match the dashboard. 
+The really tricky part is to add labels, and I'm not going to do that for all of the regions since they are not shown on the dashboard either. I ended up deciding to use annotate instead just to show those five specific regions. Also note that I'm using the direction argument in coord_polar(), all that does is flip the slices the opposite way, which I needed to match the dashboard.
 
 ```{r}
 p3 <- ggplot(cumulative_cap,
@@ -270,18 +266,32 @@ p3 <- ggplot(cumulative_cap,
 
 ## Arranging the Plots
 
-Now I'm going to use the ggarrange() function from ggpubr to put these all together. What's happening here is I'm basically using nested ggarranges so that I can put the bubble and bar charts together first, and then have the pie chart + legend in its own column that spans both of those rows. 
+Now I'm going to use the ggarrange() function from ggpubr to put these all together. What's happening here is I'm basically using nested ggarranges so that I can put the bubble and bar charts together first, and then have the pie chart + legend in its own column that spans both of those rows.
 
 ```{r fig.height=6, fig.width=8, message=FALSE, warning=FALSE, dev='png', dpi=300}
 ggarrange(ggarrange(p1, p2, nrow=2, legend = "none"), 
                   p3, widths = c(2, 1), heights = c(1,1))
 ```
 
-The only thing missing from this is, of course, the interactivity. I could have used Plotly to accomplish that, or even created the ggplots first and then converted them to Plotly. But I am focusing on Plotly in the Julia and Python code, so I won't do that here. 
+The only thing missing from this is, of course, the interactivity. I could have used Plotly to accomplish that, or even created the ggplots first and then converted them to Plotly. I will add the interactive Plotly charts I created using Python to the end of this post. 
+
+## Interactive Bubble Chart from Python Plotly
+
+```{r, echo=FALSE}
+htmltools::includeHTML("/Users/katiepress/Desktop/Rproj/Tidy Tuesday/plotly_bubble.html")
+```
 
 
+## Interactive Bar Chart from Python Plotly
 
 
+```{r, echo=FALSE}
+htmltools::includeHTML("/Users/katiepress/Desktop/Rproj/Tidy Tuesday/plotly_bar.html")
+```
+
+```{r}
+rmarkdown::convert_ipynb("/Users/katiepress/Desktop/Rproj/Tidy Tuesday/2022-05-03 US Solar.ipynb", "/Users/katiepress/Desktop/Rproj/Tidy Tuesday/python_convered.Rmd")
+```
 
 
 
