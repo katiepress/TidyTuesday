@@ -1,0 +1,146 @@
+name,department,department_desc,title,gender,level
+Phillip K. Allen,Trading,ENA Gas West,Mng Dir Trading,Male,Senior
+John Arnold,Trading,ENA Gas Financial,VP Trading,Male,Senior
+Harry Arora,Trading,ENA East Power,VP Trading,Male,Senior
+Robert Badeer,Trading,ENA West Power,Mgr Trading,Male,Junior
+Susan Bailey,Legal,ENA Legal,Specialist Legal,Female,Junior
+Eric Bass,Trading,ENA Gas Texas,Trader,Male,Junior
+Don Baughman Jr.,Trading,ENA East Power,Mgr Trading,Male,Junior
+Sally Beck,Other,Energy Operations,VP,Female,Senior
+Lynn Blair,Other,ETS,Director,Female,Senior
+Sandra F. Brawner,Trading,ENA Gas East,Dir Trading,Female,Senior
+Rick Buy,Trading,Enron,VP & CRO,Male,Senior
+Larry Campbell,Other,ETS,Specialist,Male,Junior
+Mike Carson,Trading,ENA East Power,Mgr Trading,Male,Junior
+Michelle Cash,Legal,ENA Legal,Attorney,Female,Junior
+Monika Causholli,Other,ENA West Power Real Time,Analyst,Female,Junior
+Shelley Corman,Other,ETS,VP,Female,Senior
+Sean Crandall,Trading,ENA West Power,Dir Trading,Male,Senior
+Martin Cuilla,Trading,ENA Gas Central,Mgr Trading,Male,Junior
+Jeff Dasovich,Legal,Regulatory and Government Affairs,Director,Male,Senior
+Dana Davis,Other,NA,Administrator,Female,Junior
+Clint Dean,Trading,ENA East Power,Mgr Trading,Male,Junior
+David W. Delainey,Other,EWS,President & CEO,Male,Senior
+James Derrick Jr.,Legal,Enron,VP & Gen Cnsl,Male,Senior
+Stacy E. Dickson,Legal,ENA Legal,Cnsl,Female,Junior
+Lindy Donoho,Other,ETS,Employee,Female,Junior
+Tom Donohoe,Trading,ENA Gas Central,Mgr Trading,Male,Junior
+Chris Dorland,Trading,ENA East Power,Mgr Trading,Male,Junior
+Frank Ermis,Trading,ENA Gas West,Dir Trading,Male,Senior
+Daren J. Farmer,Trading,ENA Gas Texas,Dir Trading,Male,Senior
+John M. Forney,Trading,ENA East Power,Dir Trading,Male,Senior
+Drew Fossum,Legal,ETS,VP & Gen Cnsl,Male,Senior
+Randall L. Gay,Other,ENA Gas West,Associate,Male,Junior
+Tracy Geaccone,Other,ETS,Assistant,Female,Junior
+Chris Germany,Trading,ENA Gas East,Mgr Trading,Male,Junior
+Doug Gilbert-Smith,Trading,ENA East Power,Dir Trading,Male,Senior
+Darron C. Giron,Trading,Energy Operations,Mgr Trading,Male,Junior
+John Griffith,Trading,ENA Gas Financial,Mgr Trading,Male,Junior
+Mike Grigsby,Trading,ENA Gas West,VP Trading,Male,Senior
+Mark Guzman,Other,ENA West Power Real Time,Specialist,Male,Junior
+Mark E. Haedicke,Legal,ENA Legal,Mng Director & Gen Cnsl,Male,Senior
+Mary Hain,Legal,Regulatory and Government Affairs,Director,Female,Senior
+Steven Harris,Other,ETS,VP,Male,Senior
+Rod Hayslett,Other,ETS,VP & CFO,Male,Senior
+Marie Heard,Legal,ENA Legal,Specialist Legal,Female,Junior
+Scott Hendrickson,Trading,ENA Gas East,Dir Trading,Male,Senior
+Jeffrey T. Hodge,Legal,ENA Legal,VP & Asst Gen Cnsl,Male,Senior
+Keith Holst,Trading,ENA Gas West,Dir Trading,Male,Senior
+Stanley Horton,Other,ETS,President & CEO,Male,Senior
+Kevin Hyatt,Other,ETS,Director,Male,Senior
+Dan J. Hyvl,Legal,ENA Legal,Employee,Male,Junior
+Tana Jones,Legal,ENA Legal,Specialist Legal,Female,Junior
+Vince J. Kaminski,Other,EWS,Mng Director Research,Male,Senior
+Steven J. Kean,Other,Enron,VP & Chief of Staff,Male,Senior
+Peter F. Keavey,Trading,ENA Gas East,Mgr Trading,Male,Junior
+Kam Keiser,Trading,Energy Operations,Mgr Trading,Female,Junior
+Jeff King,Trading,ENA East Power,Mgr Trading,Male,Junior
+Louise Kitchen,Other,EWS,COO,Female,Senior
+Tori Kuykendall,Trading,ENA Gas West,Mgr Trading,Female,Junior
+John J. Lavorato,Other,EWS,ENA President & CEO,Male,Senior
+Kenneth Lay,Other,Enron,President & CEO,Male,Senior
+Matthew Lenhart,Other,ENA Gas West,Analyst,Male,Junior
+Andrew H. Lewis,Trading,ENA Gas Central,Dir Trading,Male,Senior
+Michelle Lokay,Other,ETS,Director,Female,Senior
+Teb Lokey,Other,ETS,Employee,Male,Junior
+Phillip M. Love,Other,Energy Operations,Specialist,Male,Junior
+Paul T. Lucci,Trading,ENA Gas West,Dir Trading,Male,Senior
+Mike Maggi,Trading,ENA Gas Financial,Dir Trading,Male,Senior
+Kay Mann,Legal,ENA Legal,Director & Cnsl,Female,Senior
+Thomas A. Martin,Trading,ENA Gas Texas,VP Trading,Male,Senior
+Larry May,Trading,ENA Gas Financial,Dir Trading,Male,Senior
+Danny McCarty,Other,ETS,VP & CTO,Male,Senior
+Mike McConnell,Other,EWS,EGM President & CEO,Male,Senior
+Brad McKay,Trading,ENA Gas East,Dir Trading,Male,Senior
+Jonathan McKay,Trading,ENA Gas East,Dir Trading,Male,Senior
+Errol McLaughlin Jr.,Other,Energy Operations,Specialist,Male,Junior
+Bert Meyers,Other,ENA West Power Real Time,Specialist,Male,Junior
+Matt Motley,Trading,ENA West Power Real Time,Dir Trading,Male,Senior
+Scott Neal,Trading,ENA Gas East,VP Trading,Male,Senior
+Gerald Nemec,Legal,ENA Legal,Manager,Male,Junior
+Stephanie Panus,Legal,ENA Legal,Specialist Legal,Female,Junior
+Joe Parks,Trading,ENA Gas Central,Mgr Trading,Male,Junior
+Susan W. Pereira,Trading,ENA Gas East,Mgr Trading,Female,Junior
+Debra Perlingiere,Legal,ENA Legal,Specialist Legal,Female,Junior
+Vladi Pimenov,Other,ENA Gas East,Associate,Male,Junior
+Phillip Platter,Other,ENA West Power,Specialist,Male,Junior
+Kevin M. Presto,Trading,ENA East Power,VP Trading,Male,Senior
+Joe Quenet,Trading,ENA East Power,Mgr Trading,Male,Junior
+Dutch Quigley,Other,ENA Gas Financial,Associate,Male,Junior
+Bill Rapp,Legal,ETS,Attorney,Male,Junior
+Jay Reitmeyer,Other,ENA Gas West,Associate,Male,Junior
+Cooper Richey,Other,ENA West Power,Associate,Male,Junior
+Andrea Ring,Trading,ENA Gas East,Dir Trading,Female,Senior
+Richard Ring,Other,EES,Employee,Male,Junior
+Robin Rodrigue,Other,ENA Gas Central,Analyst,Female,Junior
+Benjamin Rogers,Other,ENA East Power,Associate,Male,Junior
+Kevin Ruscitti,Trading,ENA Gas Central,Mgr Trading,Male,Junior
+Elizabeth Sager,Legal,ENA Legal,VP & Asst Gen Cnsl,Female,Senior
+Eric Saibi,Other,ENA East Power,Analyst,Male,Junior
+Holden Salisbury,Other,ENA West Power,Analyst,Male,Junior
+Monique Sanchez,Other,ENA Gas West,Associate,Female,Junior
+Richard B. Sanders,Legal,ENA Legal,VP & Asst Gen Cnsl,Male,Senior
+Diana Scholtes,Trading,ENA West Power,Dir Trading,Female,Senior
+Darrell Schoolcraft,Other,ETS,Employee,Male,Junior
+Jim Schwieger,Trading,ENA Gas Texas,Trader,Male,Junior
+Susan Scott,Legal,ETS,Cnsl,Female,Junior
+Cara Semperger,Other,ENA West Power,Specialist,Female,Junior
+Sara Shackleton,Legal,ENA Legal,Gen Cnsl Asst,Female,Junior
+Jeffrey A. Shankman,Other,EWS,COO,Male,Senior
+Richard Shapiro,Legal,Regulatory and Government Affairs,VP of Regulatory Affairs,Male,Senior
+Hunter S. Shively,Trading,ENA Gas Central,VP Trading,Male,Senior
+Jeff Skilling,Other,Enron,President & CEO,Male,Senior
+Ryan Slinger,Other,ENA West Power Real Time,Specialist,Male,Junior
+Matt Smith,Other,ENA Gas West,Associate,Male,Junior
+Geir Solberg,Other,ENA West Power Real Time,Analyst,Male,Junior
+Theresa Staab,Other,ENA Gas West,Specialist,Female,Junior
+Carol St Clair,Legal,ENA Legal,Director & Gen Cnsl Asst,Female,Senior
+James D. Steffes,Legal,Regulatory and Government Affairs,VP of Government Affairs,Male,Senior
+Joe Stepenovitch,Other,ENA East Power,Specialist,Male,Junior
+Chris Stokley,Other,ENA West Power,Specialist,Male,Junior
+Geoff Storey,Trading,ENA Gas Central,Dir Trading,Male,Senior
+Fletcher J. Sturm,Trading,ENA East Power,VP Trading,Male,Senior
+Mike Swerzbin,Trading,ENA West Power,VP Trading,Male,Senior
+Kate Symes,Other,ENA West Power Real Time,Employee,Female,Junior
+Mark E. Taylor,Legal,ENA Legal,VP & Gen Cnsl,Male,Senior
+Jane M. Tholt,Trading,ENA Gas West,Dir Trading,Female,Senior
+Paul D. Thomas,Other,ENA East Power,Associate,Male,Junior
+Judy Townsend,Trading,ENA Gas East,Mgr Trading,Female,Junior
+Barry Tycholiz,Trading,ENA Gas West,VP Trading,Male,Senior
+Kim S. Ward,Trading,ENA Gas West,Mgr Trading,Female,Junior
+Kimberly Watson,Other,ETS,Director,Female,Senior
+V Charles Weldon,Other,ENA Gas Texas,Associate,Male,Junior
+Greg Whalley,Other,EWS,President & CEO,Male,Senior
+Stacey W. White,Other,Energy Operations,Director,Female,Senior
+Mark Whitt,Trading,ENA Gas West,VP Trading,Male,Senior
+Jason Williams,Other,ENA Gas Central,Specialist,Male,Junior
+Bill Williams III,Other,ENA West Power Real Time,Analyst,Male,Junior
+Jason Wolfe,Other,ENA Gas West,Analyst,Male,Junior
+Paul Y’Barbo,Other,ETS,Director,Male,Senior
+Andy Zipper,Other,EWS,VP of Enron Online,Male,Senior
+John Zufferli,Other,EWS,VP of Enron Canada,Male,Senior
+Steven P. South,Trading,ENA Gas West,Dir Trading,Male,Senior
+Robert Benson,Trading,ENA East Power,Dir Trading,Male,Senior
+Patrice L. Mims,Trading,ENA Gas Central,Dir Trading,Female,Senior
+Lisa Gang,Other,ENA West Power,Specialist,Female,Junior
+Eric Linder,Other,ENA West Power Real Time,Specialist,Male,Junior
